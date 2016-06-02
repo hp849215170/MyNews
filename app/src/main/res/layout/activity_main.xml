@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start"
-    >
-
-    <android.support.design.widget.CoordinatorLayout
+    android:orientation="vertical">
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/toolbar"/>
+    <android.support.v4.widget.DrawerLayout
+        tools:openDrawer="start"
+        android:id="@+id/app_drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/base_activity_toolbar"/>
-
+        android:layout_height="match_parent">
         <FrameLayout
-            android:id="@+id/fragment_content"
+            android:id="@+id/app_fragment_content"
             android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_height="match_parent">
 
         </FrameLayout>
-    </android.support.design.widget.CoordinatorLayout>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/main_nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/activity_main_draw"/>
 
 
-</android.support.v4.widget.DrawerLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/app_nav_view"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:menu="@menu/activity_main_draw"/>
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+
+
+
+
+
+</LinearLayout>

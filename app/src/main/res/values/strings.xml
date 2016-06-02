@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">MyNews</string>
+    <string name="app_name">我的新闻</string>
     <string name="draw_news">新闻</string>
     <string name="draw_image">妹子图</string>
     <string name="draw_about">关于</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>
