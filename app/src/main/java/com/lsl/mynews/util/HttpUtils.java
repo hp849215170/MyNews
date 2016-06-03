@@ -43,7 +43,7 @@ public class HttpUtils {
         if (mClient == null) {
             sHttpUtils = new HttpUtils();
         }
-        return mClient;
+        return sHttpUtils.mClient;
     }
 
     /********************************对外接口********************************/
@@ -79,7 +79,7 @@ public class HttpUtils {
     }
 
 
-    public abstract class ResultCallback implements Callback {
+    public static abstract class ResultCallback implements Callback {
 
 
         @Override

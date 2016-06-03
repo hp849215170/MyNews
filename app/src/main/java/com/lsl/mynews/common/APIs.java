@@ -18,12 +18,12 @@ public class APIs {
     public static final String END_DETAIL_URL = "/full.html";
     // 头条
     public static final String TOP_URL = HOST + "nc/article/headline/";
-    public static final String TOP_ID = "T1348647909107";
     // 新闻详情
     public static final String NEW_DETAIL = HOST + "nc/article/";
-
+    //其他新闻使用
     public static final String COMMON_URL = HOST + "nc/article/list/";
-
+    // 头条
+    public static final String TOP_ID = "T1348647909107";
     // 汽车
     public static final String CAR_ID = "T1348654060988";
     // 笑话

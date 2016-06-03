@@ -5,4 +5,10 @@
     <string name="draw_about">关于</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="headline">头条</string>
+    <string name="news">新闻</string>
+    <string name="nba">NBA</string>
+    <string name="car">汽车</string>
+    <string name="joke">笑话</string>
+    <string name="draw_skin">皮肤</string>
 </resources>

@@ -2,16 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:icon="@drawable/ic_assessment_white_24dp"
         android:id="@+id/nav_news"
+        android:icon="@drawable/ic_assessment_white_24dp"
         android:title="@string/draw_news"/>
 
     <item
-        android:icon="@drawable/ic_image_white_24dp"
         android:id="@+id/nav_image"
+        android:icon="@drawable/ic_image_white_24dp"
         android:title="@string/draw_image"
         />
     <item
         android:id="@+id/nav_about"
         android:title="@string/draw_about"/>
+    <item
+        android:id="@+id/nav_skin"
+        android:title="@string/draw_skin"
+        ></item>
 </menu>
