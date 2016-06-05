@@ -28,6 +28,9 @@ public class MainPresenterImpl implements MainPresenter {
             case R.id.nav_about:
                 mMainView.switch2About();
                 break;
+            case R.id.nav_skin:
+                mMainView.switch2Page();
+                break;
 
 
         }
