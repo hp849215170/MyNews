@@ -2,6 +2,7 @@ package com.lsl.mynews.main.widget;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -54,7 +55,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
                 mMainPresenter.switchNavigation(item.getItemId());
                 item.setCheckable(true);
-                mDrawerLayout.closeDrawers();
+                mDrawerLayout.closeDrawer(GravityCompat.START);
 
                 return true;
             }
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public void switch2News() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.app_fragment_content, new NewsFragment())
-                .addToBackStack(null).commit();
+                .commit();
         mToolbar.setTitle(R.string.draw_news);
     }
 
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public void switch2Image() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.app_fragment_content, new ImageFragment())
-                .addToBackStack(null).commit();
+                .commit();
         mToolbar.setTitle(R.string.draw_image);
     }
 
@@ -86,7 +87,17 @@ public class MainActivity extends BaseActivity implements MainView {
     public void switch2About() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.app_fragment_content, new AboutFragment())
-                .addToBackStack(null).commit();
+                .commit();
         mToolbar.setTitle(R.string.draw_about);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
