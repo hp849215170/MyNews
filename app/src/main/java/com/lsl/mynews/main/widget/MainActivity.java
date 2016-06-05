@@ -68,19 +68,25 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void switch2News() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.app_fragment_content, new NewsFragment()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.app_fragment_content, new NewsFragment())
+                .addToBackStack(null).commit();
         mToolbar.setTitle(R.string.draw_news);
     }
 
     @Override
     public void switch2Image() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.app_fragment_content, new ImageFragment()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.app_fragment_content, new ImageFragment())
+                .addToBackStack(null).commit();
         mToolbar.setTitle(R.string.draw_image);
     }
 
     @Override
     public void switch2About() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.app_fragment_content, new AboutFragment()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.app_fragment_content, new AboutFragment())
+                .addToBackStack(null).commit();
         mToolbar.setTitle(R.string.draw_about);
     }
 }

@@ -1,14 +1,11 @@
-package com.lsl.mynews.util;
+package com.lsl.mynews.common;
 
 
-import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
-import java.io.IOException;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.List;
@@ -23,27 +20,26 @@ public class HttpUtils {
 
     private static OkHttpClient mClient;
 
-    private static HttpUtils sHttpUtils;
 
-    private void HttpUtils() {
-        if (mClient == null) {
-            synchronized (HttpUtils.class) {
-                if (mClient == null) {
-                    mClient = new OkHttpClient();
-                    mClient.setConnectTimeout(10L, TimeUnit.SECONDS);
-                    mClient.setWriteTimeout(10L, TimeUnit.SECONDS);
-                    mClient.setReadTimeout(10L, TimeUnit.SECONDS);
-                    mClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
-                }
+    private static void ini() {
+
+        synchronized (HttpUtils.class) {
+            if (mClient == null) {
+                mClient = new OkHttpClient();
+                mClient.setConnectTimeout(10L, TimeUnit.SECONDS);
+                mClient.setWriteTimeout(10L, TimeUnit.SECONDS);
+                mClient.setReadTimeout(10L, TimeUnit.SECONDS);
+                mClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
             }
         }
+
     }
 
     private static OkHttpClient getInstance() {
-        if (mClient == null) {
-            sHttpUtils = new HttpUtils();
-        }
-        return sHttpUtils.mClient;
+        if (mClient == null)
+            ini();
+
+        return mClient;
     }
 
     /********************************对外接口********************************/
@@ -53,7 +49,7 @@ public class HttpUtils {
      * @param url
      * @param callback
      */
-    public static void get(String url, ResultCallback callback) {
+    public static void get(String url, ResultCallBack callback) {
         Request request = new Request.Builder().get().url(url).build();
         getInstance().newCall(request).enqueue(callback);
     }
@@ -65,7 +61,7 @@ public class HttpUtils {
      * @param params
      * @param callback
      */
-    public static void post(String url, List<Param> params, ResultCallback callback) {
+    public static void post(String url, List<Param> params, ResultCallBack callback) {
         FormEncodingBuilder builder = new FormEncodingBuilder();
         for (Param p : params
                 ) {
@@ -76,35 +72,6 @@ public class HttpUtils {
         Request request = new Request.Builder().url(url).post(requestBody).build();
 
         getInstance().newCall(request).enqueue(callback);
-    }
-
-
-    public static abstract class ResultCallback implements Callback {
-
-
-        @Override
-        public void onResponse(Response response) throws IOException {
-            onSuccess(response);
-        }
-
-        @Override
-        public void onFailure(Request request, IOException e) {
-            onFailure(e);
-        }
-
-        /**
-         * 成功回调
-         *
-         * @param response
-         */
-        public abstract void onSuccess(Response response);
-
-        /**
-         * 失败回调
-         *
-         * @param e
-         */
-        public abstract void onFailure(Exception e);
     }
 
 

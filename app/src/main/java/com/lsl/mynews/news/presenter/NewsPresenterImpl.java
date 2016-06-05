@@ -5,7 +5,8 @@ import android.os.Looper;
 
 import com.lsl.mynews.common.APIs;
 import com.lsl.mynews.common.Config;
-import com.lsl.mynews.util.HttpUtils;
+import com.lsl.mynews.common.ResultCallBack;
+import com.lsl.mynews.common.HttpUtils;
 import com.squareup.okhttp.Response;
 
 /**
@@ -31,10 +32,10 @@ public class NewsPresenterImpl implements NewsPresenter {
 
         String url = getNewsUrl(type, page);
 
-        HttpUtils.get(url, new HttpUtils.ResultCallback() {
+        HttpUtils.get(url, new ResultCallBack() {
             @Override
             public void onSuccess(Response response) {
-
+                
             }
 
             @Override
