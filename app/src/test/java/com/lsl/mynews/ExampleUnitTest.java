@@ -1,7 +1,7 @@
 package com.lsl.mynews;
 
 import com.lsl.mynews.common.Config;
-import com.lsl.mynews.news.presenter.INewsView;
+import com.lsl.mynews.news.view.INewsView;
 import com.lsl.mynews.news.presenter.NewsPresenter;
 import com.lsl.mynews.news.presenter.NewsPresenterImpl;
 

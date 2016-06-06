@@ -29,7 +29,7 @@ public class MainPresenterImpl implements MainPresenter {
                 mMainView.switch2About();
                 break;
             case R.id.nav_skin:
-                mMainView.switch2Page();
+
                 break;
 
 

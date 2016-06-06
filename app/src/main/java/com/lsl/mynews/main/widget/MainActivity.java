@@ -67,10 +67,15 @@ public class MainActivity extends BaseActivity implements MainView {
 
     }
 
+    private NewsFragment sNewsFragment = new NewsFragment();
+    private ImageFragment sImageFragment = new ImageFragment();
+    private AboutFragment sAboutFragment = new AboutFragment();
+
     @Override
     public void switch2News() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.app_fragment_content, new NewsFragment())
+                .replace(R.id.app_fragment_content, sNewsFragment)
+                .addToBackStack(null)
                 .commit();
         mToolbar.setTitle(R.string.draw_news);
     }
@@ -78,7 +83,8 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void switch2Image() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.app_fragment_content, new ImageFragment())
+                .replace(R.id.app_fragment_content, sImageFragment)
+                .addToBackStack(null)
                 .commit();
         mToolbar.setTitle(R.string.draw_image);
     }
@@ -86,7 +92,8 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void switch2About() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.app_fragment_content, new AboutFragment())
+                .replace(R.id.app_fragment_content, sAboutFragment)
+                .addToBackStack(null)
                 .commit();
         mToolbar.setTitle(R.string.draw_about);
     }

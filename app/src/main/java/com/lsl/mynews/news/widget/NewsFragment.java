@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.lsl.mynews.R;
 import com.lsl.mynews.base.BaseFragment;
+import com.lsl.mynews.common.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,6 @@ public class NewsFragment extends BaseFragment {
         mViewPager = (ViewPager) view.findViewById(R.id.news_vp);
 
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.headline));
-        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.news));
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.nba));
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.car));
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.joke));
@@ -47,11 +47,10 @@ public class NewsFragment extends BaseFragment {
         mViewPager.setOffscreenPageLimit(3); //加载缓存3个，防止销毁
 
         MyPageAdapter pageAdapter = new MyPageAdapter(getChildFragmentManager());
-        pageAdapter.addFragment(new NewsListFragment(), getString(R.string.headline));
-        pageAdapter.addFragment(new NewsListFragment(), getString(R.string.news));
-        pageAdapter.addFragment(new NewsListFragment(), getString(R.string.nba));
-        pageAdapter.addFragment(new NewsListFragment(), getString(R.string.car));
-        pageAdapter.addFragment(new NewsListFragment(), getString(R.string.joke));
+        pageAdapter.addFragment(NewsListFragment.newInstance(Config.TYPE_TOP), getString(R.string.headline));
+        pageAdapter.addFragment(NewsListFragment.newInstance(Config.TYPE_NAB), getString(R.string.nba));
+        pageAdapter.addFragment(NewsListFragment.newInstance(Config.TYPE_CAR), getString(R.string.car));
+        pageAdapter.addFragment(NewsListFragment.newInstance(Config.TYPE_JOKE), getString(R.string.joke));
 
         mViewPager.setAdapter(pageAdapter);
 

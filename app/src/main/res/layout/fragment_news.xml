@@ -13,7 +13,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/news_tablayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:tabIndicatorColor="@color/md_grey_50"
             app:tabIndicatorHeight="2dp"
