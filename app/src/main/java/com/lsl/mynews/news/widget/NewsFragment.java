@@ -44,7 +44,7 @@ public class NewsFragment extends BaseFragment {
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.joke));
 
 
-        mViewPager.setOffscreenPageLimit(3); //加载缓存3个，防止销毁
+        mViewPager.setOffscreenPageLimit(3); //加载缓存3个
 
         MyPageAdapter pageAdapter = new MyPageAdapter(getChildFragmentManager());
         pageAdapter.addFragment(NewsListFragment.newInstance(Config.TYPE_TOP), getString(R.string.headline));

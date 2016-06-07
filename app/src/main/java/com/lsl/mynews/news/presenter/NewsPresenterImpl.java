@@ -81,9 +81,14 @@ public class NewsPresenterImpl implements NewsPresenter {
             }
 
             @Override
-            public void onFailure(Exception e) {
-                mINewsView.onFailder(e);
-                mINewsView.hideLoading();
+            public void onFailure(final Exception e) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mINewsView.onFailder(e);
+                        mINewsView.hideLoading();
+                    }
+                });
             }
         });
 

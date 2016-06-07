@@ -1,14 +1,17 @@
 package com.lsl.mynews.news.widget;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 import com.lsl.mynews.App;
 import com.lsl.mynews.R;
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description:
+ * Description:新闻子页面
  * Author   :lishoulin
  * Date     :2016/6/3.
  */
@@ -49,6 +52,11 @@ public class NewsListFragment extends BaseFragment implements INewsView, SwipeRe
     private List<NewsBean> news;
 
     private LinearLayoutManager mLinearLayoutManager;
+
+    private boolean isRefreshFoot = true; //标记末尾
+
+    private boolean isRefreshHead = true;//标记头部
+
 
     public static NewsListFragment newInstance(int type) {
         Bundle bundle = new Bundle();
@@ -75,10 +83,16 @@ public class NewsListFragment extends BaseFragment implements INewsView, SwipeRe
         mSwipeRefreshLayout.setColorSchemeColors(R.color.orange, R.color.green, R.color.blue);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
+
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView = (RecyclerView) view.findViewById(R.id.news_list);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setHasFixedSize(true);
+
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             private int lastindex;
 
             @Override
@@ -91,7 +105,8 @@ public class NewsListFragment extends BaseFragment implements INewsView, SwipeRe
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastindex + 1 == adapter.getItemCount()) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastindex + 1 == adapter.getItemCount() && isRefreshFoot) {
+                    isRefreshFoot = false;
                     mNewsPresenter.loadNews(mType, pageIndex + APIs.PAZE_SIZE);
                 }
             }
@@ -101,9 +116,26 @@ public class NewsListFragment extends BaseFragment implements INewsView, SwipeRe
         news = new ArrayList<>();
         adapter = new NewsAdapter(news, getContext());
         mRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickLisenter(new NewsAdapter.onItemClickLisenter() {
+            @Override
+            public void onItemClick(View view, int position) {
+                NewsBean newsBean = (NewsBean) adapter.getItem(position);
+                L.info(newsBean.toString());
+
+
+                Intent intent = new Intent(getContext(), NewsDetailsActivity.class);
+                ActivityOptionsCompat compat = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(getActivity(),
+                                view.findViewById(R.id.news_image),
+                                getString(R.string.close));
+                ActivityCompat.startActivity(getActivity(), intent, compat.toBundle());
+
+            }
+        });
 
 
         mNewsPresenter.loadNews(mType, pageIndex);
+
         return view;
     }
 
@@ -118,17 +150,23 @@ public class NewsListFragment extends BaseFragment implements INewsView, SwipeRe
         adapter.notifyDataSetChanged();
 
         pageIndex += APIs.PAZE_SIZE;
+        isRefreshFoot = true;
+        isRefreshHead = true;
     }
 
     @Override
     public void onFailder(Exception e) {
         T.showShort(App.getContext(), e.getMessage());
+        isRefreshFoot = true;
+        isRefreshHead = true;
+
     }
 
     @Override
     public void showLoading() {
         if (pageIndex == 0)
             mSwipeRefreshLayout.setRefreshing(true);
+
     }
 
     @Override
@@ -138,10 +176,13 @@ public class NewsListFragment extends BaseFragment implements INewsView, SwipeRe
 
     @Override
     public void onRefresh() {
-        pageIndex = 0;
-        if (news != null)
-            news.clear();
-        mNewsPresenter.loadNews(mType, pageIndex);
+        if (isRefreshHead) {
+            pageIndex = 0;
+            if (news != null)
+                news.clear();
+            mNewsPresenter.loadNews(mType, pageIndex);
+            isRefreshHead = false;
+        }
     }
 
 

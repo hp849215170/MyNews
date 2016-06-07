@@ -29,6 +29,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
 
+    private boolean isFooter = true;
+
     public NewsAdapter(List<NewsBean> datas, Context context) {
         this.context = context;
 
@@ -41,6 +43,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
+
+        if (!isFooter) {
+            return TYPE_ITEM;
+        }
 
         if (position + 1 == getItemCount()) {
             return TYPE_FOOT;
@@ -80,10 +86,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
+
+        int begin = isFooter ? 1 : 0;
+        if (datas != null && datas.size() == 0) {
+            return begin;
+        }
+
         return datas.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView mImageView;
         TextView title;
@@ -91,10 +104,16 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
+            itemView.setOnClickListener(this);
             mImageView = (ImageView) itemView.findViewById(R.id.news_image);
             title = (TextView) itemView.findViewById(R.id.news_title);
             content = (TextView) itemView.findViewById(R.id.news_content);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mLisenter != null)
+                mLisenter.onItemClick(v, this.getLayoutPosition());
         }
     }
 
@@ -105,5 +124,22 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
         }
     }
+
+    private onItemClickLisenter mLisenter;
+
+    public void setOnItemClickLisenter(onItemClickLisenter lisenter) {
+        mLisenter = lisenter;
+    }
+
+
+    public interface onItemClickLisenter {
+        void onItemClick(View view, int position);
+    }
+
+
+    public Object getItem(int position) {
+        return datas == null ? null : datas.get(position);
+    }
+
 
 }
