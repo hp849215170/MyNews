@@ -124,6 +124,8 @@ public class NewsListFragment extends BaseFragment implements INewsView, SwipeRe
 
 
                 Intent intent = new Intent(getContext(), NewsDetailsActivity.class);
+                intent.putExtra("news", newsBean);
+
                 ActivityOptionsCompat compat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(getActivity(),
                                 view.findViewById(R.id.news_image),

@@ -4,13 +4,14 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * @author lishoulin
  */
 public class ActivityCollector {
 
-    public static List<Activity> activities = new ArrayList<>();
+    public static Stack<Activity> activities = new Stack<>();
 
     public static void addActivity(Activity activity) {
         activities.add(activity);
@@ -25,6 +26,8 @@ public class ActivityCollector {
             if (!activity.isFinishing()) {
                 activity.finish();
             }
+            activities.clear();
         }
+
     }
 }
