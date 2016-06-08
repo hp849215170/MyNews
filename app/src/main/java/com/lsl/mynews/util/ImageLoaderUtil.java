@@ -3,6 +3,7 @@ package com.lsl.mynews.util;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lsl.mynews.App;
 import com.lsl.mynews.R;
 
@@ -17,6 +18,7 @@ public class ImageLoaderUtil {
         Glide.with(App.getContext()).load(url)
                 .placeholder(R.drawable.ic_image_loading)
                 .error(R.drawable.ic_image_loadfail)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
                 .into(imageView);
     }
