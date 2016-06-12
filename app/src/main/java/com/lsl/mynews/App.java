@@ -3,6 +3,8 @@ package com.lsl.mynews;
 import android.app.Application;
 import android.content.Context;
 
+import com.tencent.bugly.crashreport.CrashReport;
+
 /**
  * Description:
  * Author   :lishoulin
@@ -16,6 +18,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        CrashReport.initCrashReport(getApplicationContext(), "J8f5SBHutsdM04D4", true);
+
     }
 
     public static Context getContext() {
