@@ -8,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.lsl.mynews.bean.ImageBean;
 import com.lsl.mynews.bean.NewsBean;
 import com.lsl.mynews.common.APIs;
 import com.lsl.mynews.common.Config;
@@ -47,7 +48,7 @@ public class NewsPresenterImpl implements NewsPresenter {
 
         HttpUtils.get(url, new ResultCallBack() {
             @Override
-            public void onSuccess(Response response) {
+            public List<ImageBean> onSuccess(Response response) {
                 try {
                     String str;
                     final List<NewsBean> datas = new ArrayList<>();
@@ -78,6 +79,7 @@ public class NewsPresenterImpl implements NewsPresenter {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                return null;
             }
 
             @Override

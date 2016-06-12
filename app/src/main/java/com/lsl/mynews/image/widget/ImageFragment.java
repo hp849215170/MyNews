@@ -1,5 +1,7 @@
 package com.lsl.mynews.image.widget;
 
+import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,8 +15,12 @@ import android.view.ViewGroup;
 
 import com.lsl.mynews.R;
 import com.lsl.mynews.base.BaseFragment;
+import com.lsl.mynews.bean.ImageBean;
 import com.lsl.mynews.common.APIs;
 import com.lsl.mynews.util.L;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description:
@@ -26,8 +32,17 @@ public class ImageFragment extends BaseFragment {
     private static ImageFragment instance;
     private SwipeRefreshLayout imageRefresh;
     private RecyclerView rvImage;
-    public static ImageFragment getInstance(){
+    private ImageRecyclerViewAdapter imageRecyclerViewAdapter;
+    List<ImageBean> imageList = new ArrayList<>();
+
+    public static ImageFragment getInstance() {
         return instance;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LoadImageResource.startLoading(APIs.IMAGES_URL);
     }
 
     @Nullable
@@ -47,18 +62,39 @@ public class ImageFragment extends BaseFragment {
                 LoadImageResource.startLoading(APIs.IMAGES_URL);
             }
         });
+
+
+        imageRecyclerViewAdapter = new ImageRecyclerViewAdapter(imageList, getActivity());
+
+        rvImage.setAdapter(imageRecyclerViewAdapter);
+
+
         return view;
 
     }
 
-    public Handler refreshHandler = new Handler(){
+    public Handler setImageHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            imageRecyclerViewAdapter.notifyDataSetChanged();
+        }
+    };
+
+    public void setImageData(ImageBean imageBean) {
+        imageList.add(imageBean);
+        L.i("imageList======>", "" + imageList.size());
+        setImageHandler.sendEmptyMessage(0x002);
+
+    }
+
+    public Handler refreshHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             stopRefresh();
         }
     };
 
-    public void stopRefresh(){
+    public void stopRefresh() {
         imageRefresh.setRefreshing(false);
     }
 }

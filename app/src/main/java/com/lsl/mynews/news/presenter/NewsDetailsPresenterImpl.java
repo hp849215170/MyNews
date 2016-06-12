@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.lsl.mynews.bean.ImageBean;
 import com.lsl.mynews.bean.NewsDetailBean;
 import com.lsl.mynews.common.APIs;
 import com.lsl.mynews.common.HttpUtils;
@@ -16,6 +17,7 @@ import com.lsl.mynews.util.L;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Description:
@@ -44,7 +46,7 @@ public class NewsDetailsPresenterImpl implements NewsDetailsPresenter {
 
         HttpUtils.get(stringBuilder.toString(), new ResultCallBack() {
             @Override
-            public void onSuccess(Response response) {
+            public List<ImageBean> onSuccess(Response response) {
                 try {
                     String str = response.body().string();
                     L.info(str);
@@ -54,7 +56,7 @@ public class NewsDetailsPresenterImpl implements NewsDetailsPresenter {
                     JsonElement jsonElement = jsonObject.get(docId);
 
                     if (jsonElement == null)
-                        return;
+                        return null;
                     final NewsDetailBean newsDetailBean = gson.fromJson(jsonElement.getAsJsonObject(), NewsDetailBean.class);
                     mHandler.post(new Runnable() {
                         @Override
@@ -69,6 +71,7 @@ public class NewsDetailsPresenterImpl implements NewsDetailsPresenter {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                return null;
             }
 
             @Override
