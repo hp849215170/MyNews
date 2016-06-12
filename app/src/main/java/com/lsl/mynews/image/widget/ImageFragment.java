@@ -35,7 +35,6 @@ public class ImageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_image, container, false);
-
         instance = this;
 
         imageRefresh = (SwipeRefreshLayout) view.findViewById(R.id.image_refresh);

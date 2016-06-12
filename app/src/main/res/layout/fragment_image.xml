@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <!--add by huangping 2016/06/10-->
+    <!--add by huangping 2016/06/10 -->
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/image_refresh"
         android:layout_width="wrap_content"

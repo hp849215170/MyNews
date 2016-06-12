@@ -40,6 +40,7 @@ public class LoadImageResource {
                     e.printStackTrace();
                 }
                 ImageFragment.getInstance().refreshHandler.sendEmptyMessage(0x001);
+
             }
 
             @Override
